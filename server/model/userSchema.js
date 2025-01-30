@@ -44,7 +44,7 @@ userSchema.pre("save", async function (next) {
 userSchema.method("generateAuthToken", async function () {
   try {
     let jwtToken = jwt.sign({ _id: this._id }, process.env.SECRET_KEY);
-    this.tokens = this.tokens.concat({ token: jwtToken });
+    this.tokens = await this.tokens.concat({ token: jwtToken });
     await this.save();
     return jwtToken;
   } catch (error) {
@@ -55,7 +55,7 @@ userSchema.method("generateAuthToken", async function () {
 // Store the Message
 userSchema.method("addMessage", async function (name, email, phone, message) {
   try {
-    this.messages = this.messages.concat({name, email, phone, message});
+    this.messages = this.messages.concat({ name, email, phone, message });
     await this.save();
     return this.messages;
   } catch (error) {

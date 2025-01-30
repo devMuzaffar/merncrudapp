@@ -14,7 +14,6 @@ const Home = () => {
           Accept: "application/json",
         },
       });
-
       const data = await response.json();
       setName(data.name);
     } catch (error) {
