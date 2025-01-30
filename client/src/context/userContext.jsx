@@ -2,9 +2,10 @@ import { createContext, useEffect, useState } from "react";
 
 export const UserContext = createContext();
 
+const saved = localStorage.getItem("isUserLogged");
+
 const UserProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    const saved = localStorage.getItem("isUserLogged");
     return saved ? JSON.parse(saved) : false;
   });
 

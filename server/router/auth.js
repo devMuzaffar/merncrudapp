@@ -91,14 +91,14 @@ router.post("/register", async (req, res) => {
 // GET About Us
 //
 router.get("/about", authenticate, (req, res) => {
-  res.send(req.rootUser);
+  res.json(req.rootUser);
 });
 
 //
 // GET getdata
 //
 router.get("/getdata", authenticate, (req, res) => {
-  res.send(req.rootUser);
+  res.json(req.rootUser);
 });
 
 //
