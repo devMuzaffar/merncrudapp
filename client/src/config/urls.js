@@ -1,4 +1,4 @@
-const BASE_URL = "https://merncrudapp-sa7x.onrender.com";
+const BASE_URL = "https://merncrudapp-sa7x.onrender.com/";
 
 const API_URLS = {
     postLogin: BASE_URL + "login",
