@@ -8,7 +8,7 @@ const authenticate = async (req, res, next) => {
         const token = req.cookies.jwt;
 
         if(!token){
-            return res.status(401).send("Unauthorized: No Token Provided");
+            return res.status(401).json("Unauthorized: No Token Provided");
         }
 
         // Verify incoming Token and return {_id} - our current Document ID
@@ -31,7 +31,7 @@ const authenticate = async (req, res, next) => {
         next();
 
     } catch (error) {
-        res.status(401).send('Unauthorized:No Token Provided')
+        res.status(401).json('Unauthorized:No Token Provided')
         console.log("Token Error:", error);
     }
 }
