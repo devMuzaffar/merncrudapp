@@ -44,11 +44,11 @@ userSchema.pre("save", async function (next) {
 userSchema.method("generateAuthToken", async function () {
   try {
     let jwtToken = jwt.sign({ _id: this._id }, process.env.SECRET_KEY);
-    this.tokens = await this.tokens.concat({ token: jwtToken });
+    this.tokens = this.tokens.concat({ token: jwtToken });
     await this.save();
     return jwtToken;
   } catch (error) {
-    console.log(error);
+    console.log("GAT", error);
   }
 });
 

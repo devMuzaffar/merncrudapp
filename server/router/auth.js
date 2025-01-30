@@ -41,12 +41,12 @@ router.post("/login", async (req, res) => {
         return res.json({ message: "Invalid Credentials Pass" });
       }
 
-      res.json({ message: "User Logged In Successfully" });
+      return res.json({ message: "User Logged In Successfully" });
     } else {
-      res.status(400).json({ error: "Invalid Credentials" });
+      return res.status(400).json({ error: "Invalid Credentials" });
     }
   } catch (error) {
-    res.json({ message: error });
+    return res.json({ message: error });
   }
 });
 
@@ -119,7 +119,7 @@ router.post("/contact", authenticate, async (req, res) => {
       await userContact.addMessage(name, email, phone, message);
       await userContact.save();
 
-      res.status(201).json({ message: "User Contact Successfully" });
+      return res.status(201).json({ message: "User Contact Successfully" });
     }
   } catch (error) {
     console.log(error);
@@ -130,8 +130,8 @@ router.post("/contact", authenticate, async (req, res) => {
 // GET Logout
 //
 router.get("/logout", (req, res) => {
-  res.clearCookie('jwt');
-  res.status(200).send('User Logged out');
+  res.clearCookie("jwt");
+  return res.status(200).send("User Logged out");
 });
 
 export default router;
