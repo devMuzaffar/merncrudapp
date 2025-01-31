@@ -1,25 +1,13 @@
 import { useEffect, useState } from "react";
-import API_URLS from "../../config/urls";
+import fetchUserName from '../../services/homeService';
 
 const Home = () => {
-  const [name, setName] = useState(null);
+  const [name, setName] = useState('');
 
   const getUserName = async () => {
-    try {
-      const response = await fetch(API_URLS.getData, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
-      const data = await response.json();
-      setName(data.name);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    const userName = await fetchUserName();
+    setName(userName ? userName : '');
+  }
 
   useEffect(() => {
     getUserName();

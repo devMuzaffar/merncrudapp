@@ -4,8 +4,8 @@ import Form from "react-bootstrap/Form";
 import { BsEnvelopeFill } from "react-icons/bs";
 import { BsLockFill } from "react-icons/bs";
 import { useNavigate } from "react-router";
-import API_URLS from '../../../config/urls';
 import { UserContext } from "../../../context/userContext";
+import postLogin from "../../../services/loginService";
 const formProps = { className: "ps-5" };
 const iconProps = {
   className:
@@ -13,7 +13,7 @@ const iconProps = {
 };
 
 const LoginForm = () => {
-  const {setIsLoggedIn} = useContext(UserContext);
+  const { setIsLoggedIn } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -21,27 +21,9 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch(API_URLS.postLogin, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = response.json();
-
-      if (response.status === 400 || !data) {
-        window.alert("Invalid Credentials");
-      } else {
-        setIsLoggedIn(true);
-        window.alert("Login Successfully");
-        navigate("/");
-      }
-    } catch (error) {
-      console.log(error);
+    const login = await postLogin({ setIsLoggedIn, email, password });
+    if (login) {
+      navigate("/");
     }
   };
 

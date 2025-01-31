@@ -24,8 +24,6 @@ function Contact() {
 
       {/* Contact Form */}
       <ContactForm />
-
-      
     </div>
   );
 }

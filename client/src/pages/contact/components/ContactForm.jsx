@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import API_URLS from "../../../config/urls";
+import { fetchAbout, postMessage } from "../../../services/contactService";
 
 const ContactForm = () => {
   const [userData, setUserData] = useState({
@@ -11,36 +11,15 @@ const ContactForm = () => {
     message: "",
   });
 
-  const callAboutPage = async () => {
-    try {
-      const response = await fetch(API_URLS.getData, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        credentials: "include",
-      });
-
-      const data = await response.json();
-      setUserData({
-        ...userData,
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-      });
-
-      if (!response.status === 200) {
-        const error = new Error(response.error);
-        throw error;
-      }
-    } catch (error) {
-      console.log(error);
+  const callAbout = async () => {
+    const aboutData = await fetchAbout(userData);
+    if (aboutData) {
+      setUserData(aboutData);
     }
   };
 
   useEffect(() => {
-    callAboutPage();
+    callAbout();
   }, []);
 
   const handleInputs = (e) => {
@@ -49,31 +28,13 @@ const ContactForm = () => {
     setUserData({ ...userData, [name]: value });
   };
 
+  // Submit Message Form Method
   const handleForm = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch(API_URLS.postContact, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(userData),
-      });
-
-      const data = await response.json();
-
-      if (!data) {
-        console.log("Message Not Send");
-      } else {
-        alert("Message Send Successfully");
-        console.log(data);
-
-        setUserData({ ...userData, message: "" });
-      }
-    } catch (error) {
-      console.log(error);
+    const newMessage = await postMessage(userData);
+    if (newMessage) {
+      setUserData(newMessage);
     }
   };
 
@@ -134,5 +95,3 @@ const ContactForm = () => {
 };
 
 export default ContactForm;
-
-//  # 36 - SENDING COTACT FORM DATA TO SERVER

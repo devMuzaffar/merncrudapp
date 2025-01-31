@@ -2,13 +2,11 @@ import Button from "react-bootstrap/Button";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import timelineData from "../../../list/timelineData";
-import userData from '../../../list/userData.js';
 
 const Details = ({data}) => {
 
-  const profileName = data ? data[1].text : userData[1].text;
-  const profileWork = data ? data[4].text : userData[4].text;
-  const renderList = data ? data : userData;
+  const profileName = data[1]?.text;
+  const profileWork = data[4]?.text;
 
   return (
     <div className="w-full flex flex-col gap-10">
@@ -32,7 +30,7 @@ const Details = ({data}) => {
           {/* About Tab */}
           <Tab eventKey="about" title="About">
             <div className="space-y-6 px-2 pt-4">
-            {renderList.map(({title, text}, index) => (
+            {data?.map(({title, text}, index) => (
               <div
                 key={index}
                 className="flex justify-between items-center h-full"

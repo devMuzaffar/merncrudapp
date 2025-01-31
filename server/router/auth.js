@@ -91,7 +91,7 @@ router.post("/register", async (req, res) => {
 // GET About Us
 //
 router.get("/about", authenticate, (req, res) => {
-  res.json(req.rootUser);
+  res.send(req.rootUser);
 });
 
 //

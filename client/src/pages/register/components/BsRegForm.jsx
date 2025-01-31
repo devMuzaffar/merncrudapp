@@ -9,7 +9,7 @@ import {
 } from "react-icons/bs";
 import { BsLockFill, BsLock } from "react-icons/bs";
 import { useNavigate } from "react-router";
-import API_URLS from '../../../config/urls';
+import postRegister from "../../../services/registerService";
 const formProps = { className: "ps-5" };
 const iconProps = {
   className:
@@ -45,27 +45,9 @@ const BsRegForm = () => {
   const submitForm = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch(API_URLS.postRegister, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
-
-      const data = await response.json();
-
-      if (response.status === 422 || !data) {
-        console.log(user);
-        window.alert("Invalid Registration");
-        console.log(data);
-      } else {
-        window.alert("Registration Successfull");
-        navigate("/login");
-      }
-    } catch (error) {
-      console.log(error);
+    const register = await postRegister(user);
+    if (register) {
+      navigate("/login");
     }
   };
 
