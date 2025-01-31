@@ -61,7 +61,7 @@ const About = () => {
         <Profile />
 
         {/* Detail Column */}
-        <Details data={userData}/>
+        {userData && <Details data={userData}/>}
       </div>
 
 
