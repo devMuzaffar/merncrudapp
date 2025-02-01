@@ -35,6 +35,8 @@ router.post("/login", async (req, res) => {
       res.cookie("jwt", token, {
         expires: new Date(Date.now() + 2589200000),
         httpOnly: true,
+        secure: true,
+        sameSite: "None",
       });
 
       if (!isMatch) {
